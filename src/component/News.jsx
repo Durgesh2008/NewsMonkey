@@ -15,11 +15,12 @@ const News = (props) => {
     const response= await fetch(`https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&apiKey=${APIKey}&page=${page}&pageSize=${pagesize}`)
          const data= await response.json()
          settotalResult(data.totalResults)
-          setarticles(data.articles);
+        
         }
       
       
 const loadFunc=async()=>{
+
   const response= await fetch(`https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&apiKey=${APIKey}&page=${page}&pageSize=${pagesize}`)
          const data= await response.json()
          setpage(page+1)
@@ -38,15 +39,15 @@ const loadFunc=async()=>{
   return (
     <>
      <InfiniteScroll
-        
+      
         pageStart={pagesize}
         loadMore={loadFunc}
         hasMore={articles.length!==totalResults}
-        loader={<Spiner/>}
+        loader={<Spiner key={uuidv4()}/>}
       >
-      <div className='container'> 
+      <div className='container' > 
         <div className="row row-cols-3  mx-auto" style={{width:'100%'}}>{
-          articles.map(e=>{
+          articles.map((e)=>{
            return( <NewsItem key={uuidv4()} title={e.title} description={e.description} Imurl={e.urlToImage} contenturl={e.url}/>)
           })
         }
